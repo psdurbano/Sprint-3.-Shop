@@ -21,11 +21,20 @@ function buy(id) {
 
 // Exercise 2
 function cleanCart() {
-
+    cart.length = 0;
+    cartList.length = 0;
+    console.log(cartList);
 }
 
 // Exercise 3
 function calculateTotal() {
+    total = 0;
+
+    for (i = 0; i < cartList.length; i++){
+        total += cartList[i].price;
+    }
+    console.log(total);
+    return total;
     // Calculate total price of the cart using the "cartList" array
 }
 

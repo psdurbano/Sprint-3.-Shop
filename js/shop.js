@@ -11,9 +11,9 @@ function buy(id) {
   for (let i = 0; i < products.length; i++) {
     if (products[i].id == id) {
       cartList.push(products[i]);
-      generateCart();
+      console.log(cartList);
     }
-  }
+  }  
   // 1. Loop for to the array products to get the item to add to cart
   // 2. Add found product to the cartList array
 }
@@ -38,34 +38,36 @@ function calculateTotal() {
 }
 
 // Exercise 4
- /*   function generateCart() {
-  const cart = cartList.map((cartList) => {
-    return {
-      ...cartList,
-      quantity: 0,
-      subtotal: 0,
-      subtotalWithDiscount: 0,
-    };
-  });
-
-  for (let i = 0; i < cartList.length; i++) {
-    let IndiceItem = cart.findIndex(item => item.id === cartList[i].id);
-    if (IndiceItem === -1) {
-      cart.push(cart[i]);
-    } else {
-      cart[IndiceItem].quantity++;
-    }
-  }  console.log(cart);
-  
-
-
-  // Using the "cartlist" array that contains all the items in the shopping cart,
-  // generate the "cart" array that does not contain repeated items, instead each item of this array "cart" shows the quantity of product.
-}*/
+    function generateCart() {
+ // Using the "cartlist" array that contains all the items in the shopping cart,
+ // generate the "cart" array that does not contain repeated items, instead each item of this array "cart" shows the quantity of product.
+     cartList.forEach((item) =>{
+      let newItem = cart.find((it) => it.id === item.id);
+      if(newItem){
+        newItem.quantity +=1;
+      } else {
+        newItem ={...item, quantity: 1, subtotal:0, subtotalWithDiscount: 0};
+        cart.push(newItem);
+      }
+     });
+     applyPromotionsCart()
+     console.log(cart);
+} 
 
 // Exercise 5
 function applyPromotionsCart() {
   // Apply promotions to each item in the array "cart"
+  for (let i = 0; i < cart.length; i++){
+    if(cart[i].id === 1 && cart[i].quantity >= 3){
+      let priceDiscount = 10;
+      cart[i].subtotalWithDiscount = priceDiscount * cart[i].quantity;
+    } else if (cart[i].id === 3 && cart[i].quantity >= 10){
+      let priceDiscount3 = (cart[i].price / 3) * 2;
+      cart[i].subtotalWithDiscount = priceDiscount3.toFixed(2) * cart[i].quantity;
+    } else{
+        cart[i].subtotalWithDiscount = cart[i].subtotal;
+    }
+  }
 }
 
 // Exercise 6
